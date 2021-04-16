@@ -39,7 +39,9 @@ app.get("/xapi", (req, res) => {
         .forEach((activityElement) => {
           url = activityElement.childNamed("launch").val;
         });
-      return res.redirect(`/xapi/player.html?url=${url}`);
+      return res.redirect(
+        `/xapi/player.html?url=${url}&ID=${extractedDirName}`
+      );
     });
   }
   if (fs.existsSync(__dirname + `/contents/xapi/${extractedDirName}`)) {

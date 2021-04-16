@@ -129,7 +129,9 @@ $(document).ready(function () {
   var PROTOTYPE_REGISTRATION = Config.registration || TinCan.Utils.getUUID();
   var actor = { mbox: "mailto:espitaj26@gmail.com", name: "Jesus Espitia" };
 
-  let indexFile = window.location.href.split("url=")[1];
+  const urlParams = new URLSearchParams(window.location.search);
+  const indexFile = urlParams.get("url");
+  const ID = urlParams.get("ID");
 
   sendLaunchedStatement(
     actor,
@@ -139,7 +141,7 @@ $(document).ready(function () {
 
   $("#content").attr(
     "src",
-    `/xapi/Golf/${indexFile}?` +
+    `/xapi/${ID}/${indexFile}?` +
       "endpoint=" +
       encodeURIComponent(PROTOTYPE_ENDPOINT) +
       "&auth=" +
