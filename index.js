@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/contents", { dotFiles: "allow" }));
 
-app.get("/", (req, res) => {
+app.get("/xapi", (req, res) => {
   let zipURL = req.query.url;
   var fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
   console.log(fullUrl);
