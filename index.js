@@ -11,7 +11,7 @@ let app = express();
 app.use(cors());
 
 app.use(express.static(__dirname + "/public"));
-app.use(express.static(__dirname + "/contents", { dotFiles: "allow" }));
+app.use(express.static(__dirname + "/xapi/contents", { dotFiles: "allow" }));
 
 app.get("/xapi", (req, res) => {
   let zipURL = req.query.url;
@@ -24,11 +24,11 @@ app.get("/xapi", (req, res) => {
     idx2 = zipURL.indexOf(".zip");
   let extractedDirName = zipURL.substr(idx1, idx2 - idx1);
   let unzipPipe = unzip.Extract({
-    path: __dirname + `/contents/${extractedDirName}`,
+    path: __dirname + `/xapi/contents/${extractedDirName}`,
   });
 
   function returnTo() {
-    let file = __dirname + `/contents/${extractedDirName}/tincan.xml`;
+    let file = __dirname + `/xapi/contents/${extractedDirName}/tincan.xml`;
 
     fs.readFile(file, function (err, data) {
       let document = new xmldoc.XmlDocument(data);
@@ -39,10 +39,10 @@ app.get("/xapi", (req, res) => {
         .forEach((activityElement) => {
           url = activityElement.childNamed("launch").val;
         });
-      return res.redirect(`/player.html?url=${url}`);
+      return res.redirect(`/xapi/player.html?url=${url}`);
     });
   }
-  if (fs.existsSync(__dirname + `/contents/${extractedDirName}`)) {
+  if (fs.existsSync(__dirname + `/xapi/contents/${extractedDirName}`)) {
     console.log("Already Exist");
     return returnTo();
   }
