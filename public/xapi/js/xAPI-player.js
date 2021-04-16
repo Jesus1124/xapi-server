@@ -139,7 +139,7 @@ $(document).ready(function () {
 
   $("#content").attr(
     "src",
-    `/Golf/${indexFile}?` +
+    `/xapi/Golf/${indexFile}?` +
       "endpoint=" +
       encodeURIComponent(PROTOTYPE_ENDPOINT) +
       "&auth=" +
