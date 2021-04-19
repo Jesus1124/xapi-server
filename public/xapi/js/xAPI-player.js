@@ -151,6 +151,35 @@ $(document).ready(function () {
       "&registration=" +
       encodeURIComponent(PROTOTYPE_REGISTRATION)
   );
+
+  var prevResult = null;
+  setInterval(function () {
+    tincan.getStatements({
+      params: {
+        limit: 1,
+      },
+      callback: function (err, res) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        if (
+          res.statements[0].result &&
+          prevResult !== res.statements[0].result
+        ) {
+          window.parent.postMessage(
+            JSON.stringify({
+              type: "completion_status",
+              value: res.statements[0].result.completion,
+            })
+          );
+        }
+
+        prevResult = res.statements[0].result;
+      },
+    });
+  }, 1000);
 });
 
 function sendLaunchedStatement(actor, activityId, registration) {
