@@ -168,12 +168,16 @@ $(document).ready(function () {
           res.statements[0].result &&
           prevResult !== res.statements[0].result
         ) {
-          window.parent.postMessage(
-            JSON.stringify({
-              type: "completion_status",
-              value: res.statements[0].result.completion,
-            })
-          );
+          if (!prevResult || prevResult.completion !== res.statements[0].result)
+            window.parent.postMessage(
+              JSON.stringify({
+                type: "completion_status",
+                value: res.statements[0].result.completion
+                  ? "completed"
+                  : "incomplete",
+              }),
+              "*"
+            );
         }
 
         prevResult = res.statements[0].result;
